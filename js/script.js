@@ -25,6 +25,17 @@
 
 let numberOfFilms = prompt("Сколько фильмов вы уже посмотрели?");
 
+if(numberOfFilms<10){
+    let gg = alert("Просмотрено мало фильмов");
+}
+else if(numberOfFilms>=10 && numberOfFilms<30){
+    let gg = alert("Вы - классический зритель");
+}
+else if(numberOfFilms>=30){
+    let gg = alert("Вы - киноман");
+}
+
+let i = 0;
 const personalMovieDB = {
     count: numberOfFilms,
     movies: {},
@@ -33,16 +44,22 @@ const personalMovieDB = {
     privat: false
 };
 
-for(let i=0; i<=1; i++){
+while(i<=1){
     
     let nameFilms = prompt("Один из последних просмотренных фильмов?");
-    let value = prompt("На сколько оцените его?");
-    while(value<=0){
-        let gg = alert("Введены некоректные данные. Попробуйте еще раз");
-        let nameFilms = prompt("Один из последних просмотренных фильмов?");
-        let value = prompt("На сколько оцените его?");
+    let value = +prompt("На сколько оцените его?");
+    if(nameFilms.length>50 || nameFilms === ""){
+        let gg = alert("Неверные данные");
+        i--;
     }
-    personalMovieDB.movies[i] = `${nameFilms} : ${value}`; 
+    else{
+        personalMovieDB.movies[nameFilms] = value; 
+    }
+    i++;
+    
+    
 }
+
+console.log(personalMovieDB);
 
 
