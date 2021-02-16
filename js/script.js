@@ -23,43 +23,66 @@
 
 'use strict';
 
-let numberOfFilms = prompt("Сколько фильмов вы уже посмотрели?");
 
-if(numberOfFilms<10){
-    let gg = alert("Просмотрено мало фильмов");
-}
-else if(numberOfFilms>=10 && numberOfFilms<30){
-    let gg = alert("Вы - классический зритель");
-}
-else if(numberOfFilms>=30){
-    let gg = alert("Вы - киноман");
-}
-
+let numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?");
 let i = 0;
 const personalMovieDB = {
     count: numberOfFilms,
     movies: {},
     actors: {},
     genres: [],
-    privat: false
+    privat: true
+};
+const start = (count) =>{
+   
+    if(count<10){
+        let gg = console.log("Просмотрено мало фильмов");
+    }
+    else if(count>=10 && count<30){
+        let gg = console.log("Вы - классический зритель");
+    }
+    else if(count>=30){
+        let gg = console.log("Вы - киноман");
+    }
 };
 
-while(i<=1){
+const view = (db,j) => {
+    while(i<j){
     
-    let nameFilms = prompt("Один из последних просмотренных фильмов?");
-    let value = +prompt("На сколько оцените его?");
-    if(nameFilms.length>50 || nameFilms === ""){
-        let gg = alert("Неверные данные");
-        i--;
+        let nameFilms = prompt("Один из последних просмотренных фильмов?");
+        let value = +prompt("На сколько оцените его?");
+        if(nameFilms.length>50 || nameFilms === ""){
+            let gg = alert("Неверные данные");
+            i--;
+        }
+        else{
+            db.movies[nameFilms] = value; 
+        }
+        i++;
+        
+        
+    }
+};
+
+
+const showMyDB = (locked)=> {
+    if(locked){
+        console.log(personalMovieDB);
     }
     else{
-        personalMovieDB.movies[nameFilms] = value; 
+        console.log("Данные засекречены");
     }
-    i++;
-    
-    
-}
+};
 
-console.log(personalMovieDB);
+const writeYourGenres = (db,genres) =>{
+    for(let i = 1; i<=3; i++){
+        let bb = prompt(`Ваш любимый жанр под номером ${i}`);
+        db.genres[i-1] = bb;
+    }
+};
+start(numberOfFilms);
+view(personalMovieDB,2);
+showMyDB(personalMovieDB.privat);
+writeYourGenres(personalMovieDB, personalMovieDB.genres);
 
 
