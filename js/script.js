@@ -24,6 +24,11 @@
 'use strict';
 
 
+
+
+
+
+
 let numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?");
 let i = 0;
 const personalMovieDB = {
@@ -31,58 +36,83 @@ const personalMovieDB = {
     movies: {},
     actors: {},
     genres: [],
-    privat: true
-};
-const start = (count) =>{
+    privat: true,
+    start: (count) =>{
    
-    if(count<10){
-        let gg = console.log("Просмотрено мало фильмов");
-    }
-    else if(count>=10 && count<30){
-        let gg = console.log("Вы - классический зритель");
-    }
-    else if(count>=30){
-        let gg = console.log("Вы - киноман");
-    }
-};
-
-const view = (db,j) => {
-    while(i<j){
-    
-        let nameFilms = prompt("Один из последних просмотренных фильмов?");
-        let value = +prompt("На сколько оцените его?");
-        if(nameFilms.length>50 || nameFilms === ""){
-            let gg = alert("Неверные данные");
-            i--;
+        if(count<10){
+            let gg = console.log("Просмотрено мало фильмов");
+        }
+        else if(count>=10 && count<30){
+            let gg = console.log("Вы - классический зритель");
+        }
+        else if(count>=30){
+            let gg = console.log("Вы - киноман");
+        }
+    },
+    view: (db,j) => {
+        while(i<j){
+        
+            let nameFilms = prompt("Один из последних просмотренных фильмов?");
+            let value = +prompt("На сколько оцените его?");
+            if(nameFilms.length>50 || nameFilms === ""){
+                let gg = alert("Неверные данные");
+                i--;
+            }
+            else{
+                db.movies[nameFilms] = value; 
+            }
+            i++;
+            
+            
+        }
+    },
+    showMyDB: (locked)=> {
+        if(locked){
+            console.log(personalMovieDB);
         }
         else{
-            db.movies[nameFilms] = value; 
+            console.log("Данные засекречены");
         }
-        i++;
+    },
+    writeYourGenres: (db,genres) =>{
+        for(let i = 1; i<=3; i++){
+
+            let bb = prompt(`Ваш любимый жанр под номером ${i}`);
+            if(bb===null || bb===""){
+                console.log("ERROR");
+                i--;
+            }
+            else{
+                db.genres[i-1] = bb;
+            }
+            
+        }
+        genres.forEach((item, i) => {
+            console.log(`Любимый жанр #${i+1} это ${item}`);
+        });
         
+    },
+    toogleVisibleMyDB: ()=>{
+        if(personalMovieDB.privat){
+            personalMovieDB.privat = false;
+        }
+        else{
+            personalMovieDB.privat = true;
+        }
         
     }
 };
 
 
-const showMyDB = (locked)=> {
-    if(locked){
-        console.log(personalMovieDB);
-    }
-    else{
-        console.log("Данные засекречены");
-    }
-};
 
-const writeYourGenres = (db,genres) =>{
-    for(let i = 1; i<=3; i++){
-        let bb = prompt(`Ваш любимый жанр под номером ${i}`);
-        db.genres[i-1] = bb;
-    }
-};
-start(numberOfFilms);
-view(personalMovieDB,2);
-showMyDB(personalMovieDB.privat);
-writeYourGenres(personalMovieDB, personalMovieDB.genres);
+
+
+
+
+personalMovieDB.start(numberOfFilms);
+personalMovieDB.view(personalMovieDB,2);
+personalMovieDB.toogleVisibleMyDB();
+personalMovieDB.showMyDB(personalMovieDB.privat);
+personalMovieDB.writeYourGenres(personalMovieDB, personalMovieDB.genres);
 
 
